@@ -1,0 +1,41 @@
+---
+export interface Props {
+  rating: number;
+  size?: 'sm' | 'md' | 'lg';
+}
+
+const { rating, size = 'sm' } = Astro.props;
+const stars = Array.from({ length: 5 }, (_, i) => i + 1);
+---
+
+<div class="stars stars--{size}" aria-label={`${rating} out of 5 stars`}>
+  {stars.map((star) => (
+    <span class:list={{ 'star': true, 'star--filled': star <= Math.floor(rating), 'star--half': star === Math.ceil(rating) && !Number.isInteger(rating) }}>
+      {star <= Math.floor(rating) ? '★' : '☆'}
+    </span>
+  ))}
+  <span class="stars__value">{rating}</span>
+</div>
+
+<style>
+  .stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.125rem;
+  }
+  .star {
+    color: var(--color-star);
+    line-height: 1;
+  }
+  .stars__value {
+    margin-left: 0.25rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+  .stars--sm .star { font-size: 1rem; }
+  .stars--sm .stars__value { font-size: 0.85rem; }
+  .stars--md .star { font-size: 1.25rem; }
+  .stars--md .stars__value { font-size: 1rem; }
+  .stars--lg .star { font-size: 1.5rem; }
+  .stars--lg .stars__value { font-size: 1.1rem; }
+</style>

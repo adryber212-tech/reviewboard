@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ReviewCard from '../components/ReviewCard.astro';
+import { getCollection } from 'astro:content';
+
+const reviews = await getCollection('reviews', ({ data }) => !data.draft);
+const sortedReviews = reviews.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+---
+
+<BaseLayout title="ReviewBoard — Honest Product Reviews" description="In-depth, unbiased reviews of the latest products. Find out what's worth your money.">
+  <section class="hero">
+    <h1 class="hero__title">Honest Reviews.<br><span class="hero__highlight">No Fluff.</span></h1>
+    <p class="hero__subtitle">We test products rigorously so you know what's worth buying. In-depth reviews with real pros, cons, and ratings.</p>
+  </section>
+
+  <section class="reviews-grid">
+    <h2 class="section-title">Latest Reviews</h2>
+    <div class="grid">
+      {sortedReviews.map((review) => <ReviewCard review={review} />)}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    text-align: center;
+    padding: 3rem 0 4rem;
+  }
+  .hero__title {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+  .hero__highlight {
+    background: linear-gradient(135deg, var(--color-accent), #7c3aed);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero__subtitle {
+    font-size: 1.15rem;
+    color: var(--color-text-muted);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  .section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+</style>

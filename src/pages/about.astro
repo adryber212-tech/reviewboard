@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About — ReviewBoard" description="Learn more about ReviewBoard and our review process.">
+  <article class="about">
+    <h1>About ReviewBoard</h1>
+    <p>We're a team of product testers and researchers dedicated to helping you make better buying decisions. Every product we review is tested in real-world conditions for at least two weeks.</p>
+
+    <h2>Our Review Process</h2>
+    <ol>
+      <li><strong>Research</strong> — We analyze specs, read user feedback, and identify key testing criteria.</li>
+      <li><strong>Real-World Testing</strong> — Every product is used in daily scenarios for 14+ days.</li>
+      <li><strong>Scoring</strong> — We rate each product on performance, build quality, value, and user experience.</li>
+      <li><strong>Publishing</strong> — We write honest reviews with clear pros, cons, and verdicts.</li>
+    </ol>
+
+    <h2>Why Trust Us?</h2>
+    <p>We never accept payment for positive reviews. Our affiliate links help fund our work, but they never influence our opinions. If a product sucks, we'll tell you.</p>
+  </article>
+</BaseLayout>
+
+<style>
+  .about {
+    max-width: 650px;
+    margin: 0 auto;
+  }
+  .about h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+  }
+  .about ol {
+    padding-left: 1.5rem;
+  }
+  .about li {
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+  }
+</style>

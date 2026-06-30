@@ -1,0 +1,61 @@
+---
+export interface Props {
+  pros: string[];
+  cons: string[];
+}
+
+const { pros, cons } = Astro.props;
+---
+
+<div class="pros-cons">
+  <div class="pros-cons__column">
+    <h3 class="pros-cons__heading pros-cons__heading--pro">✓ Pros</h3>
+    <ul class="pros-cons__list">
+      {pros.map((item) => <li class="pros-cons__item pros-cons__item--pro">{item}</li>)}
+    </ul>
+  </div>
+  <div class="pros-cons__column">
+    <h3 class="pros-cons__heading pros-cons__heading--con">✗ Cons</h3>
+    <ul class="pros-cons__list">
+      {cons.map((item) => <li class="pros-cons__item pros-cons__item--con">{item}</li>)}
+    </ul>
+  </div>
+</div>
+
+<style>
+  .pros-cons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  .pros-cons__column {
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+  .pros-cons__column:first-child {
+    background: #f0fdf4;
+  }
+  .pros-cons__column:last-child {
+    background: #fef2f2;
+  }
+  .pros-cons__heading {
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0 0 1rem;
+  }
+  .pros-cons__heading--pro { color: #16a34a; }
+  .pros-cons__heading--con { color: #dc2626; }
+  .pros-cons__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .pros-cons__item {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    padding: 0.375rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+  .pros-cons__item:last-child { border-bottom: none; }
+</style>

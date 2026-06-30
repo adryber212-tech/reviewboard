@@ -1,0 +1,87 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Contact — ReviewBoard" description="Get in touch with the ReviewBoard team.">
+  <article class="contact">
+    <h1>Get in Touch</h1>
+    <p>Have a product you'd like us to review? Want to give feedback? Drop us a line.</p>
+
+    <form class="form" action="https://formspree.io/f/example" method="POST">
+      <label class="form__field">
+        <span>Name</span>
+        <input type="text" name="name" required />
+      </label>
+      <label class="form__field">
+        <span>Email</span>
+        <input type="email" name="email" required />
+      </label>
+      <label class="form__field">
+        <span>Message</span>
+        <textarea name="message" rows="5" required></textarea>
+      </label>
+      <button type="submit" class="btn">Send Message</button>
+    </form>
+
+    <p class="contact__note">Or email us directly at <a href="mailto:hello@reviewboard.com">hello@reviewboard.com</a></p>
+  </article>
+</BaseLayout>
+
+<style>
+  .contact {
+    max-width: 550px;
+    margin: 0 auto;
+  }
+  .contact h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+  }
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin: 2rem 0;
+  }
+  .form__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  .form__field input,
+  .form__field textarea {
+    padding: 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    background: var(--color-surface);
+    transition: border-color 0.2s;
+  }
+  .form__field input:focus,
+  .form__field textarea:focus {
+    outline: none;
+    border-color: var(--color-accent);
+  }
+  .btn {
+    align-self: flex-start;
+    background: var(--color-accent);
+    color: white;
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn:hover {
+    background: #1d4ed8;
+  }
+  .contact__note {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+  }
+</style>

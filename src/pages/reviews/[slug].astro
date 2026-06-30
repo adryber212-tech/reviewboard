@@ -1,0 +1,134 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import StarRating from '../../components/StarRating.astro';
+import ProsCons from '../../components/ProsCons.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const reviews = await getCollection('reviews');
+  return reviews
+    .filter((review) => review.id)
+    .map((review) => ({
+      params: { slug: String(review.id) },
+      props: { review },
+    }));
+}
+
+const { review } = Astro.props;
+const { data } = review;
+const { Content } = await render(review);
+---
+
+<BaseLayout title={`${data.title} — ReviewBoard`} description={data.description}>
+  <article class="review">
+    <header class="review__header">
+      <span class="review__category">{data.category}</span>
+      <h1 class="review__title">{data.title}</h1>
+      <div class="review__meta">
+        <StarRating rating={data.rating} size="lg" />
+        <div class="review__info">
+          <span>By {data.author}</span>
+          <span>{data.pubDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+        </div>
+      </div>
+      {data.price && <div class="review__price">Price: <strong>{data.price}</strong></div>}
+    </header>
+
+    <p class="review__description">{data.description}</p>
+
+    <ProsCons pros={data.pros} cons={data.cons} />
+
+    <div class="review__content">
+      <Content />
+    </div>
+
+    {data.affiliateUrl && (
+      <div class="review__cta">
+        <a href={data.affiliateUrl} class="btn" target="_blank" rel="noopener noreferrer">
+          Check Price on Amazon →
+        </a>
+        <p class="review__disclosure">We earn a commission if you buy through this link, at no extra cost to you.</p>
+      </div>
+    )}
+  </article>
+</BaseLayout>
+
+<style>
+  .review {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .review__header {
+    margin-bottom: 2rem;
+  }
+  .review__category {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-accent);
+  }
+  .review__title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    margin: 0.5rem 0 1rem;
+    letter-spacing: -0.03em;
+  }
+  .review__meta {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .review__info {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+  .review__price {
+    margin-top: 0.75rem;
+    font-size: 1.1rem;
+  }
+  .review__description {
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+  .review__content {
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+  .review__content :global(h2) {
+    margin-top: 2.5rem;
+  }
+  .review__cta {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    text-align: center;
+  }
+  .btn {
+    display: inline-block;
+    background: var(--color-accent);
+    color: white;
+    padding: 0.875rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .btn:hover {
+    background: #1d4ed8;
+    text-decoration: none;
+  }
+  .review__disclosure {
+    margin-top: 0.75rem;
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+</style>

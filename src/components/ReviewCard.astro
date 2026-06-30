@@ -1,0 +1,90 @@
+---
+import StarRating from './StarRating.astro';
+import type { CollectionEntry } from 'astro:content';
+
+type Review = CollectionEntry<'reviews'>;
+
+export interface Props {
+  review: Review;
+}
+
+const { review } = Astro.props;
+const { data } = review;
+---
+
+<article class="card">
+      <a href={`/reviews/${review.id}`} class="card__link">
+    <div class="card__header">
+      <span class="card__category">{data.category}</span>
+      <StarRating rating={data.rating} />
+    </div>
+    <h2 class="card__title">{data.title}</h2>
+    <p class="card__description">{data.description}</p>
+    <div class="card__meta">
+      <span class="card__date">{data.pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+      {data.price && <span class="card__price">{data.price}</span>}
+    </div>
+  </a>
+</article>
+
+<style>
+  .card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .card:hover {
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+  }
+  .card__link {
+    display: block;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: inherit;
+  }
+  .card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+  .card__category {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-accent);
+  }
+  .card__title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 0 0 0.5rem;
+    color: var(--color-text);
+  }
+  .card__description {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    margin: 0 0 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .card__meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+  }
+  .card__date {
+    color: var(--color-text-muted);
+  }
+  .card__price {
+    font-weight: 700;
+    color: var(--color-accent);
+  }
+</style>
